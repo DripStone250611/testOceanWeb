@@ -144,7 +144,6 @@ export default {
     function getHistoryDataAndShow(postData){
       isDataEmpty.value = false
       historyDataPostRes = []
-      console.log(postData)
       axios({
         url: 'https://openapi.mp.usr.cn/usrCloud/dev/getDeviceDataPointHistory',
         method: 'post',
@@ -154,7 +153,6 @@ export default {
               'Content-Type': 'application/json'
             }
       }).then((responseData)=> {
-        console.log(responseData)
         historyDataPostRes = responseData.data.data.list
         let i = 0
         setOptions.series = []
