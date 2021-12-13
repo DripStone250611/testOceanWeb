@@ -131,7 +131,7 @@ export default {
   background-color: #fff;
   /*background-image: linear-gradient(to right top, #165184, #09648c, #227690, #428692, #619695, #659f96, #6da794, #79af91, #74b181, #75b26c, #7eb253, #8bb035);*/
   /*background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);*/
-  background-image: url(../../../assets/t82vgO.jpeg);
+  background-image: url(../../../assets/background.jpeg);
   background-size: 100% 100%;
 }
 .login-container {
