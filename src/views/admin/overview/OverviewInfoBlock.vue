@@ -46,6 +46,7 @@ export default {
     }
     // 在页面刷新时将store保存到sessionStorage里
     onBeforeUnmount(()=>{
+
         sessionStorage.setItem('store', JSON.stringify(store.state))
 
     })

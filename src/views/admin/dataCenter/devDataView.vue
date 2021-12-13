@@ -68,7 +68,6 @@ export default {
     const devIdx = route.query.devIdx
     const infoDevsDetail = store.state.infoDevsDetail[devIdx]
     const infoVar = store.state.infoVars[devIdx]
-    console.log(infoVar)
     const devInfoShow = {
       'name':infoDevsDetail.device.name,
       'deviceId':infoDevsDetail.device.deviceId,
@@ -93,7 +92,6 @@ export default {
 
     provide("address",devInfoShow.address)
     const numSlaves = infoDevsDetail.slaveTotal
-    console.log("numSlaves:",numSlaves)
     let numSlaveVar = 0
     const varInfoShow = reactive([])
     let i = 0
@@ -103,7 +101,6 @@ export default {
     const devDatapointsPost = []
     for (i;i<numSlaves;i++){
       numSlaveVar = infoVar.slaves[i].iotDataDescription.length
-      console.log("numSlaveVar",numSlaveVar)
       for (j;j<numSlaveVar;j++){
         varInfoShow.push(Object.assign({
           "id":infoVar.slaves[i].iotDataDescription[j].id,
