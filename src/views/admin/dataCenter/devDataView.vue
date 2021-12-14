@@ -152,8 +152,9 @@ export default {
     return{
       devInfoShow,
       varInfoShow,
+      title,
       viewHistoryData,
-      title
+
     }
   }
 }

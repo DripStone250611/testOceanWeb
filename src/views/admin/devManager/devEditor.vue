@@ -1,19 +1,4 @@
 <template>
-<!--  <el-card>-->
-<!--    <template #header>-->
-<!--      <div class="card-header">-->
-<!--        <h1>设备信息</h1>-->
-<!--      </div>-->
-<!--    </template>-->
-<!--    <div v-for="(value, key, index) in devInfoShow">-->
-<!--      {{arrInfoShowCN[index]}}<el-input v-model="devInfoShow[key]"></el-input>-->
-<!--    </div>-->
-<!--  </el-card>-->
-<!--  <div>-->
-<!--    <el-button @click="subMitEdit(devInfoShow)">-->
-<!--      提交-->
-<!--    </el-button>-->
-<!--  </div>-->
   <el-card>
     <template #header>
       <div class="card-header">
@@ -26,8 +11,8 @@
           <div style="padding-bottom: 30px;">
             <span>基本信息</span>
           </div>
-          <div style="width:600px;">
-            <el-form label-width="120px">
+          <div style="width:400px;">
+            <el-form label-width="150px">
               <el-form-item label="设备名称">
                 <el-input v-model="devInfoShow['name']"></el-input>
               </el-form-item>
@@ -49,21 +34,23 @@
           <div style="padding-bottom: 30px;">
             <span>设备配置</span>
           </div>
-          <div style="width:600px;">
+          <div style="width:400px;">
             <el-form label-width="150px">
               <el-form-item label="设备标签">
 
               </el-form-item>
               <el-form-item label="设备地图">
                 <span v-text="devInfoShow['address']" style="padding-right: 30px;"></span>
-                <el-button size="medium" color="#626aef" style="color: white">地图</el-button>
+                <el-button size="medium" color="#626aef" style="color: white" @click="openMap()">修改</el-button>
               </el-form-item>
-
             </el-form>
           </div>
         </el-card>
       </el-col>
     </el-row>
+    <dialogMap :originAddress="devInfoShow['address']"
+               @newAddr="changeAddr"
+    ></dialogMap>
     <div style="padding-top: 30px; text-align: center;">
       <el-button size="medium" color="#626aef" style="color: white" @click="subMitEdit(devInfoShow)">保存</el-button>
     </div>
@@ -73,12 +60,28 @@
 <script>
 import {useStore} from "vuex";
 import {useRoute, useRouter} from "vue-router";
-import {ref} from "vue";
+import {ref, provide} from "vue";
 import axios from "axios";
+import dialogMap from "./components/dialogMap.vue"
 
 export default {
   name: "devEditor",
+  components:{
+    dialogMap,
+  },
   setup(){
+
+    const show = ref(false)
+    const msg = ref("map")
+    provide("isShow",show)
+    provide("msg",msg)
+    function openMap(){
+      show.value = true
+    }
+    const changeAddr = (something) => {
+      devInfoShow.value['address'] = something;
+    }
+
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
@@ -135,11 +138,12 @@ export default {
         }
       })
     }
-
     return{
       devInfoShow,
       arrInfoShowCN,
-      subMitEdit
+      subMitEdit,
+      openMap,
+      changeAddr,
     }
 
 
