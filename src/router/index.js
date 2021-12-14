@@ -69,6 +69,11 @@ const routes = [
         name:'devedit',
         path: 'devedit',
         component: () => import('../views/admin/devManager/devEditor')
+      },
+      {
+        name:'userInfoView',
+        path:'userInfoView',
+        component:()=> import('../views/admin/userManager/userInfoView')
       }
 
 

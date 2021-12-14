@@ -18,12 +18,12 @@
             <el-dropdown class="user-name" trigger="click" @command="handleSelect">
               <span class="el-dropdown-link">
 <!--                        {{ username }}-->
-                        admin
+                        {{ this.$store.state.account }}
                         <i class="el-icon-caret-bottom"></i>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item>用户信息</el-dropdown-item>
+                  <el-dropdown-item @click="getUserInfo">用户信息</el-dropdown-item>
                   <el-dropdown-item>登出</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -47,6 +47,11 @@ export default{
         {index: 'Ship', title:'船舶可视化'},
         {index: 'LOT', title:'物联网'}
       ]
+    }
+  },
+  methods:{
+    getUserInfo(){
+      this.$router.push({name:'userInfoView'})
     }
   }
 }
