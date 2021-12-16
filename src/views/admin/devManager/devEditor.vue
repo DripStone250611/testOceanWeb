@@ -1,13 +1,20 @@
 <template>
   <el-card>
     <template #header>
+      <div style="margin-bottom: 20px;">
+        <el-breadcrumb :separator-icon="ArrowRight">
+          <el-breadcrumb-item>设备管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/admin/devManager' }">联网设备</el-breadcrumb-item>
+          <el-breadcrumb-item>设备编辑</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div class="card-header">
         <span>修改设备</span>
       </div>
     </template>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-card class="basicInfo"  style="height: 300px;">
+        <el-card class="basicInfo"  style="height: 350px;">
           <div style="padding-bottom: 30px;">
             <span>基本信息</span>
           </div>
@@ -30,7 +37,7 @@
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-card style="height: 300px;">
+        <el-card style="height: 350px;">
           <div style="padding-bottom: 30px;">
             <span>设备配置</span>
           </div>
@@ -63,6 +70,7 @@ import {useRoute, useRouter} from "vue-router";
 import {ref, provide} from "vue";
 import axios from "axios";
 import dialogMap from "./components/dialogMap.vue"
+import { ArrowRight } from '@element-plus/icons-vue'
 
 export default {
   name: "devEditor",
@@ -141,6 +149,7 @@ export default {
     return{
       devInfoShow,
       arrInfoShowCN,
+      ArrowRight,
       subMitEdit,
       openMap,
       changeAddr,

@@ -44,5 +44,23 @@ export default {
 }
 .el-header{
   background-color: #165184;
+  position:relative;
 }
+.el-aside {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+}
+.el-main {
+  position: absolute;
+  left: 200px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
+}
+
+
 </style>

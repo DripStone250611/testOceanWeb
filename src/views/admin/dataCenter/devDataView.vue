@@ -1,24 +1,32 @@
 <template #default="scope">
+  <el-card >
+    <div style="margin-bottom: 30px;">
+      <el-breadcrumb :separator-icon="ArrowRight">
+        <el-breadcrumb-item >设备管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/admin/devManager' }">联网设备</el-breadcrumb-item>
+        <el-breadcrumb-item>数据查看</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
 
-  <el-row :gutter="20">
-    <el-col :span="12">
-      <el-card class="box-card" body-style="height:280px;">
-        <template #header>
-          <div>
-            <span>设备信息</span>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-card class="box-card" body-style="height:280px;">
+          <template #header>
+            <div>
+              <span>设备信息</span>
+            </div>
+          </template>
+          <div class="content-column text item" v-for="(val, key) in devInfoShow" :key="key">
+            <span class="content-title">{{title[key]}}：</span>
+            <span class="content-words">{{val}}</span>
           </div>
-        </template>
-        <div class="content-column text item" v-for="(val, key) in devInfoShow" :key="key">
-          <span class="content-title">{{title[key]}}：</span>
-          <span class="content-words">{{val}}</span>
-        </div>
-      </el-card>
-    </el-col>
-    <el-col :span="12">
-      <BaiduMap></BaiduMap>
-    </el-col>
-  </el-row>
-  <el-card>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <BaiduMap></BaiduMap>
+      </el-col>
+    </el-row>
+    <el-card>
       <el-table
           ref="multipleTable"
           :data="varInfoShow"
@@ -40,6 +48,8 @@
         </el-table-column>
       </el-table>
     </el-card>
+  </el-card>
+
 </template>
 
 
@@ -49,6 +59,7 @@ import {useStore} from "vuex";
 import axios from "axios";
 import {reactive,provide} from "vue";
 import BaiduMap from "../../../components/Map/BaiduMap";
+import { ArrowRight } from '@element-plus/icons-vue'
 export default {
   name: "devDataView",
   components: {BaiduMap},
@@ -153,6 +164,7 @@ export default {
       devInfoShow,
       varInfoShow,
       title,
+      ArrowRight,
       viewHistoryData,
 
     }
