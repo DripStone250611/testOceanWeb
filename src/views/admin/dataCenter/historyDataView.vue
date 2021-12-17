@@ -19,13 +19,14 @@
           :value="item.value"
       />
     </el-select>
-    <el-select v-model="varOpNow" multiple placeholder="请选择变量" collapse-tags @change="setCheck">
+    <el-select v-model="varOpNow" multiple placeholder="请选择变量" collapse-tags>
       <el-option
           v-for="item in varOptions"
           :key="item.value"
-          :label="item.label"
+          :label="item.label[item.isSelected]"
           :value="item.value"
           clearable
+          @click="setCheck(item.value)"
       />
 
     </el-select>
@@ -206,9 +207,10 @@ export default {
           infoVars[i].slaves[j].iotDataDescription.forEach((item,index)=>{
             let obj = item
             infoVarLst[i][j].push({
-              label:obj.name,
+              label:[obj.name,obj.name+' √'],
               slaveIndex:j,
-              value:index
+              value:index,
+              isSelected:0
             })
           })
 
@@ -255,12 +257,8 @@ export default {
         series: stOptns.series
       },true)
     }
-    function setCheck(){
-      const length = varOpNow.value.length
-      let i = 0
-      for (i;i<length;i++){
-
-      }
+    function setCheck(idx){
+      varOptions.value[idx].isSelected = Number(!varOptions.value[idx].isSelected)
     }
     return{
       searchTime,
