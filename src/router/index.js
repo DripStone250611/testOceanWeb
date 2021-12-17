@@ -5,11 +5,6 @@ import AuthLayout from  '../layout/auth-layout'
 import AdminLayout from '../layout/admin-layout'
 const routes = [
   {
-    path:'/login',
-    name:'login',
-    component: () => import('../views/auth/login/login.vue')
-  },
-  {
     path: '/',
     name: 'Home',
     component: () => import('../views/auth/login/login.vue')
@@ -18,9 +13,6 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {

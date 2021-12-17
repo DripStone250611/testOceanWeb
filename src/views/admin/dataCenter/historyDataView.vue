@@ -19,13 +19,15 @@
           :value="item.value"
       />
     </el-select>
-    <el-select v-model="varOpNow" multiple placeholder="请选择变量" collapse-tags>
+    <el-select v-model="varOpNow" multiple placeholder="请选择变量" collapse-tags @change="setCheck">
       <el-option
           v-for="item in varOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
+          clearable
       />
+
     </el-select>
 
     <el-date-picker
@@ -39,7 +41,6 @@
   </div>
 
   <el-card>
-    <div><el-empty v-if="isDataEmpty" description="暂无数据"></el-empty></div>
     <div class="main" id="main"></div>
   </el-card>
 
@@ -110,7 +111,6 @@ export default {
     let myChart = ''
     onMounted(()=>{
       myChart = markRaw(echarts.init(document.getElementById("main"))) ;
-
       window.addEventListener("resize",function(){
         myChart.resize();
       });
@@ -255,6 +255,13 @@ export default {
         series: stOptns.series
       },true)
     }
+    function setCheck(){
+      const length = varOpNow.value.length
+      let i = 0
+      for (i;i<length;i++){
+
+      }
+    }
     return{
       searchTime,
       isDataEmpty,
@@ -269,7 +276,8 @@ export default {
       myChart,
       getVarsFromSlvOp,
       getSlaveFromDevOp,
-      getHistoryDataSet
+      getHistoryDataSet,
+      setCheck
     }
   },
 

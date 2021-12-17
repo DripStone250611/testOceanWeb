@@ -25,6 +25,19 @@ export default createStore({
     },
     getInfoVars(state, infoVars_){
       state.infoVars = infoVars_.slice()
+    },
+    resetStore(state){
+      state = Object.assign({
+        isShow:false,
+        isSidebarMinimized: false,
+        userName:'test',
+        account:'test',
+        token:'test',
+        uid:'test',
+        tel:'test',
+        infoDevsDetail:[],
+        infoVars:[]
+      })
     }
   },
   actions: {

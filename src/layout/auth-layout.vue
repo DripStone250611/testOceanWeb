@@ -1,13 +1,23 @@
 <template>
-  <h1>wocaonimabi</h1>
+  <login/>
 </template>
 
 <script>
+import Login from "../views/auth/login/login";
+import * as echarts from 'echarts';
+import 'echarts-gl';
+import {markRaw, onBeforeMount, onMounted} from "vue";
+
 export default {
-  name: "AuthLayout"
+  name: "AdminLayout",
+  setup(){
+  },
+  components:{
+    Login
+
+},
 }
 </script>
 
 <style scoped>
-
 </style>

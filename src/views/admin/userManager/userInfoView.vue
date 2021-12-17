@@ -12,15 +12,12 @@
         </el-form-item>
         <el-form-item label="邮箱账号" >
           <el-input disabled v-model="userInfo['email']"></el-input>
-          <el-button>修改</el-button>
         </el-form-item>
         <el-form-item label="手机号码">
           <el-input disabled v-model="userInfo['tel']"></el-input>
-          <el-button>修改</el-button>
         </el-form-item>
         <el-form-item label="微信">
           <el-input disabled v-model="userInfo['wechatName']"></el-input>
-          <el-button>绑定微信</el-button>
         </el-form-item>
         <el-form-item label="公司名称">
           <el-input  v-model="userInfo['company']"></el-input>

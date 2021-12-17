@@ -40,6 +40,7 @@
         </el-table-column>
       </el-table>
     </el-card>
+  <div id="main" class="main"/>
 </template>
 
 
@@ -47,8 +48,10 @@
 import {useRoute, useRouter} from "vue-router";
 import {useStore} from "vuex";
 import axios from "axios";
-import {reactive,provide} from "vue";
+import {reactive, provide, onMounted, markRaw, ref,watch} from "vue";
 import BaiduMap from "../../../components/Map/BaiduMap";
+import * as echarts from 'echarts';
+
 export default {
   name: "devDataView",
   components: {BaiduMap},
@@ -64,7 +67,131 @@ export default {
       sessionStorage.setItem('store', JSON.stringify(store.state))
     })
 
+    let myChart = ''
+    onMounted(()=>{
+      myChart = markRaw(echarts.init(document.getElementById("main"))) ;
 
+      window.addEventListener("resize",function(){
+        myChart.resize();
+      });
+    })
+    const tmpNow = ref(0)
+    watch(() => {tmpNow.value},
+        (oldvar,newvar)=>{
+      const option = {
+        series: [
+          {
+            type: 'gauge',
+            center: ['50%', '60%'],
+            startAngle: 200,
+            endAngle: -20,
+            min: 0,
+            max: 60,
+            splitNumber: 12,
+            itemStyle: {
+              color: '#FFAB91'
+            },
+            progress: {
+              show: true,
+              width: 30
+            },
+            pointer: {
+              show: false
+            },
+            axisLine: {
+              lineStyle: {
+                width: 30
+              }
+            },
+            axisTick: {
+              distance: -45,
+              splitNumber: 5,
+              lineStyle: {
+                width: 2,
+                color: '#999'
+              }
+            },
+            splitLine: {
+              distance: -52,
+              length: 14,
+              lineStyle: {
+                width: 3,
+                color: '#999'
+              }
+            },
+            axisLabel: {
+              distance: -20,
+              color: '#999',
+              fontSize: 20
+            },
+            anchor: {
+              show: false
+            },
+            title: {
+              show: false
+            },
+            detail: {
+              valueAnimation: true,
+              width: '60%',
+              lineHeight: 40,
+              borderRadius: 8,
+              offsetCenter: [0, '-15%'],
+              fontSize: 60,
+              fontWeight: 'bolder',
+              formatter: '{value} °C',
+              color: 'auto'
+            },
+            data: [
+              {
+                value: tmpNow.value
+              }
+            ]
+          },
+          {
+            type: 'gauge',
+            center: ['50%', '60%'],
+            startAngle: 200,
+            endAngle: -20,
+            min: 0,
+            max: 60,
+            itemStyle: {
+              color: '#FD7347'
+            },
+            progress: {
+              show: true,
+              width: 8
+            },
+            pointer: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            },
+            detail: {
+              show: false
+            },
+            data: [
+              {
+                value: tmpNow.value
+              }
+            ]
+          }
+        ]
+      }
+      myChart.setOption(option)
+    },
+        {
+          deep:true
+        })
     const devIdx = route.query.devIdx
     const infoDevsDetail = store.state.infoDevsDetail[devIdx]
     const infoVar = store.state.infoVars[devIdx]
@@ -140,6 +267,10 @@ export default {
         return a.dataPointId-b.dataPointId
       })
       for (i=0;i<varNum;i++){
+        console.log(varInfoShow[i].name)
+        if (varInfoShow[i].name=="温度"|| varInfoShow[i].name=="空气温度"){
+          tmpNow.value = responseData.data.data.list[i].value
+        }
         varInfoShow[i].valueShow = responseData.data.data.list[i].value.toString()+varInfoShow[i].unit
         varInfoShow[i].value = responseData.data.data.list[i].value
         varInfoShow[i].updateTime = new Date(responseData.data.data.list[i].time).toLocaleString().replace(/:\d{1,2}$/,' ')
@@ -154,6 +285,7 @@ export default {
       varInfoShow,
       title,
       viewHistoryData,
+      tmpNow
 
     }
   }
@@ -178,4 +310,8 @@ export default {
   width:100px;
 }
 
+.main{
+  height: 400px;
+  width: 100%;
+}
 </style>
