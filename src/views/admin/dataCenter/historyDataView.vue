@@ -31,9 +31,12 @@
         <el-option
             v-for="item in varOptions"
             :key="item.value"
-            :label="item.label"
+            :label="item.label[item.isSelected]"
             :value="item.value"
+            @click = "setCheck(item.value)"
+
         />
+
       </el-select>
       <el-date-picker
           v-model="searchTime"
