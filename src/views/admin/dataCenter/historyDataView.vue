@@ -1,47 +1,60 @@
 <template>
-  <div>
-    <el-select v-model="devOpNow"
-               placeholder="请选择联网设备"
-               @change="getSlaveFromDevOp(devOpNow)"
-    >
-      <el-option
-          v-for="item in devOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-      />
-    </el-select>
-    <el-select v-model="slaveOpNow" placeholder="请选择从机设备" @change="getVarsFromSlvOp(devOpNow,slaveOpNow)">
-      <el-option
-          v-for="item in slaveOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-      />
-    </el-select>
-    <el-select v-model="varOpNow" multiple placeholder="请选择变量" collapse-tags>
-      <el-option
-          v-for="item in varOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-      />
-    </el-select>
+  <el-card >
+    <div style="margin-bottom: 30px;">
+      <el-breadcrumb :separator-icon="ArrowRight">
+        <el-breadcrumb-item>数据中心</el-breadcrumb-item>
+        <el-breadcrumb-item>数据统计</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div style="margin-bottom: 15px; display:flex;align-items:center;">
+      <el-select v-model="devOpNow"
+                 placeholder="请选择联网设备"
+                 @change="getSlaveFromDevOp(devOpNow)"
+                 class="select"
+      >
+        <el-option
+            v-for="item in devOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
+      <el-select v-model="slaveOpNow" placeholder="请选择从机设备" @change="getVarsFromSlvOp(devOpNow,slaveOpNow)">
+        <el-option
+            v-for="item in slaveOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
+      <el-select v-model="varOpNow" multiple placeholder="请选择变量" collapse-tags>
+        <el-option
+            v-for="item in varOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
 
-    <el-date-picker
-        v-model="searchTime"
-        type="datetimerange"
-        start-placeholder="开始日期"
-        end-placeholder="截止日期"
-    >
-    </el-date-picker>
-    <el-button @click="getHistoryDataSet()">查询</el-button>
-  </div>
+      <el-date-picker
+          v-model="searchTime"
+          type="datetimerange"
+          start-placeholder="开始日期"
+          end-placeholder="截止日期"
+      >
+      </el-date-picker>
+      <el-button @click="getHistoryDataSet()">查询</el-button>
+    </div>
 
-  <el-card>
-    <div><el-empty v-if="isDataEmpty" description="暂无数据"></el-empty></div>
-    <div class="main" id="main"></div>
+    <el-card >
+      <div style="position: relative;">
+        <div  class="main" id="main"></div>
+        <div  v-if="isDataEmpty" style="z-index: 3000; position:absolute; top: 0px;right: 0px;width: 100%;height:100%;display:flex;align-items:center;justify-content: center;"><el-empty description="暂无数据"></el-empty></div>
+      </div>
+
+    </el-card>
   </el-card>
+
 
 </template>
 
@@ -52,6 +65,7 @@ import {onMounted, markRaw, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import {useStore} from "vuex";
+import { ArrowRight } from '@element-plus/icons-vue'
 export default {
   name: "historyDataView",
   setup() {
@@ -267,6 +281,7 @@ export default {
       varOpNow,
       infoVars,
       myChart,
+      ArrowRight,
       getVarsFromSlvOp,
       getSlaveFromDevOp,
       getHistoryDataSet
