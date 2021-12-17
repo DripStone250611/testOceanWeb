@@ -34,6 +34,20 @@ export default {
           alert("没有找到地址");
         }
       }, "青岛市");
+
+      function setPlace(value){
+        function myFun(){
+          var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+          map.centerAndZoom(pp, 10);
+          marker.setPosition(pp);
+          map.addOverlay(marker);    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+          onSearchComplete: myFun
+        });
+        local.search(value);
+      }
+
       map.addEventListener("mousemove",function(e){
         if(e.point.lng >= 0){
           document.getElementById('span1').innerHTML = "经度：" + (e.point.lng).toFixed(5) + "E";
@@ -45,7 +59,6 @@ export default {
         }else{
           document.getElementById('span2').innerHTML = "纬度：" + (-e.point.lat).toFixed(5) + "S";
         }
-        console.log((e.point.lng).toFixed(5))
       });
       function ZoomControl() {
         this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;

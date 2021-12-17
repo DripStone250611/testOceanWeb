@@ -5,7 +5,6 @@
         :data="infoShow"
         style="width: 100%"
         @selection-change="handleSelectionChange"
-        v-if="infoShow.length>0"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column property="onlineStatus" label="设备状态" width="120" />
@@ -36,7 +35,7 @@
 <script>
 import {useStore} from "vuex";
 import {reactive, ref, watch} from "vue";
-import {useRouter} from "vue-router";
+import {useRouter,useRoute} from "vue-router";
 
 export default {
   name: "OverviewTables",
@@ -44,32 +43,62 @@ export default {
   {
     const store = useStore()
     const router = useRouter()
-    let multipleSelection=reactive([])
+    const route = useRoute()
     const infoShow = ref([])
-    watch(() => {
-          store.state.infoDevsDetail.length
-        },(oldVar, newVar) => {
-          const infoDevsDetail = store.state.infoDevsDetail.slice()
-          const devNum = store.state.infoDevsDetail.length
-          let i = 0
-          for (i;i<devNum;i++)
+    if (sessionStorage.getItem('store')) {
+      store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem('store'))))
+    }
+    // 在页面刷新时将store保存到sessionStorage里
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.setItem('store', JSON.stringify(store.state))
+    })
+    if (route.name == 'overview'){
+      watch(() => {
+            store.state.infoDevsDetail.length
+          },(oldVar, newVar) => {
+            const infoDevsDetail = store.state.infoDevsDetail.slice()
+            const devNum = store.state.infoDevsDetail.length
+            let i = 0
+            for (i;i<devNum;i++)
+            {
+              infoShow.value.push(Object.assign({
+                'idx':i,
+                'name':infoDevsDetail[i].device.name,
+                'deviceId':infoDevsDetail[i].device.deviceId,
+                'projectName':infoDevsDetail[i].device.projectName,
+                'productModelName':infoDevsDetail[i].device.productModelName,
+                'address':infoDevsDetail[i].device.address,
+                'onlineStatus':infoDevsDetail[i].device.onlineStatus,
+                'status':infoDevsDetail[i].device.status
+              }))
+            }
+          },
           {
-            infoShow.value.push(Object.assign({
-              'idx':i,
-              'name':infoDevsDetail[i].device.name,
-              'deviceId':infoDevsDetail[i].device.deviceId,
-              'projectName':infoDevsDetail[i].device.projectName,
-              'productModelName':infoDevsDetail[i].device.productModelName,
-              'address':infoDevsDetail[i].device.address,
-              'onlineStatus':infoDevsDetail[i].device.onlineStatus,
-              'status':infoDevsDetail[i].device.status
-            }))
+            deep:true
           }
-        },
-        {
-          deep:true
-        }
-    );
+      );
+    }
+    else{
+      const infoDevsDetail = store.state.infoDevsDetail.slice()
+      const devNum = store.state.infoDevsDetail.length
+      let i = 0
+      for (i;i<devNum;i++)
+      {
+        infoShow.value.push(Object.assign({
+          'idx':i,
+          'name':infoDevsDetail[i].device.name,
+          'deviceId':infoDevsDetail[i].device.deviceId,
+          'projectName':infoDevsDetail[i].device.projectName,
+          'productModelName':infoDevsDetail[i].device.productModelName,
+          'address':infoDevsDetail[i].device.address,
+          'onlineStatus':infoDevsDetail[i].device.onlineStatus,
+          'status':infoDevsDetail[i].device.status
+        }))
+      }
+    }
+    let multipleSelection=reactive([])
+
+
     function viewDeviceData(idx){
       router.push({name:'devDataView',query:{devIdx:idx}})
     }

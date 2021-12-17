@@ -22,9 +22,10 @@
               v-model="searchAddress"
           >
             <template #append>
-              <el-button :icon="Search"></el-button>
+              <el-button :icon="Search" id="searchButton"></el-button>
             </template>
           </el-input>
+
         </div>
         <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:300px;height:auto; display:none;"></div>
       </div>
@@ -71,18 +72,12 @@ export default {
       map.enableScrollWheelZoom();                               //启用滚轮放大缩小
       // 创建地址解析器实例
       const myGeo = new BMap.Geocoder();
-      const point = new BMap.Point(120.69477, 36.3673842);
+      let point = new BMap.Point(120.69477, 36.3673842);
       const marker = new BMap.Marker(point);
       map.centerAndZoom(point, 10);
 
       //将传入组件的地址在地图上标注出来
-      myGeo.getPoint(newAddress.value, function(point){
-        if (point){
-          map.centerAndZoom(point, 10);
-          marker.setPosition(point);
-          map.addOverlay(marker);
-        }
-      },"青岛市");
+      setPlace(newAddress.value);
 
       //跟踪鼠标点击事件，进行逆地址解析，并修改标注位置
       map.addEventListener("click",function(e){
@@ -93,32 +88,41 @@ export default {
         marker.setPosition(e.point);
       });
 
+
+      //搜索框智能提示
       const ac = new BMap.Autocomplete(
           {
             "input" : "suggestId"
             ,"location" : map
           }
       );
-
       let myValue;
-      ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-        let _value = e.item.value;
-        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-        searchAddress.value = myValue;
-        setPlace();
+      ac.addEventListener("onconfirm",function(e){
+        const _value = e.item.value;
+        myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+        newAddress.value = myValue;
+        setPlace(myValue);
       });
-      function setPlace(){
-        map.clearOverlays();    //清除地图上所有覆盖物
+      function setPlace(value){
         function myFun(){
-          const pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
-          map.centerAndZoom(pp, 18);
-          map.addOverlay(new BMap.Marker(pp));    //添加标注
+          var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+          map.centerAndZoom(pp, 10);
+          marker.setPosition(pp);
+          map.addOverlay(marker);    //添加标注
         }
-        const local = new BMap.LocalSearch(map, { //智能搜索
+        var local = new BMap.LocalSearch(map, { //智能搜索
           onSearchComplete: myFun
         });
-        local.search(myValue);
+        local.search(value);
       }
+
+      document.getElementById('searchButton').addEventListener('click',function(e){
+        myValue = searchAddress.value;
+        newAddress.value = searchAddress.value;
+        setPlace(myValue);
+      });
+
+
 
       //左上角实时显示经纬度组件
       map.addEventListener("mousemove",function(e){
@@ -178,7 +182,12 @@ export default {
   padding: 20px 20px 20px 20px;
   width: calc(100% - 40px);
 }
+
+
 </style>
 <style>
 .anchorBL{display:none;}
+.tangram-suggestion-main{
+  z-index: 4000;
+}
 </style>
