@@ -1,5 +1,4 @@
 <template>
-
   <el-card >
     <div style="margin-bottom: 30px;">
       <el-breadcrumb :separator-icon="ArrowRight">
@@ -220,9 +219,10 @@ export default {
           infoVars[i].slaves[j].iotDataDescription.forEach((item,index)=>{
             let obj = item
             infoVarLst[i][j].push({
-              label:obj.name,
+              label:[obj.name,obj.name+' √'],
               slaveIndex:j,
-              value:index
+              value:index,
+              isSelected:0
             })
           })
 
@@ -269,12 +269,8 @@ export default {
         series: stOptns.series
       },true)
     }
-    function setCheck(){
-      const length = varOpNow.value.length
-      let i = 0
-      for (i;i<length;i++){
-
-      }
+    function setCheck(idx){
+      varOptions.value[idx].isSelected = Number(!varOptions.value[idx].isSelected)
     }
     return{
       searchTime,
