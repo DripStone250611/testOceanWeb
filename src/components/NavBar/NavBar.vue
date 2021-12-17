@@ -4,7 +4,7 @@
       <img src="../../assets/mylogo.png" height="38" width="289.5"/>
     </div>
     <div style="float: left; margin-left: 50px;">
-      <el-menu :default-active="activeIndex"  mode="horizontal" collapse-transition=false>
+      <el-menu :default-active="activeIndex"  mode="horizontal" >
 
           <el-menu-item v-for="item in items" :index="item.index" :key="item.index">
               <span slot="title">{{ item.title }}</span>
@@ -15,7 +15,7 @@
     <div class="header-right">
         <div class="header-user-con">
             <div class="user-avator"><img src="../../assets/header.jpg"></div>
-            <el-dropdown class="user-name" trigger="click" @command="handleSelect">
+            <el-dropdown class="user-name" trigger="click">
               <span class="el-dropdown-link">
 <!--                        {{ username }}-->
                         {{ this.$store.state.account }}

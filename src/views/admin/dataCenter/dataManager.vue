@@ -8,13 +8,37 @@
       </el-breadcrumb>
     </div>
 
-    <el-card>
-      <div id="chartDevOnlineStatus" class="main"/>
-      <div id="chartDevProduct" class="main"/>
-      <div id="chartDevAddress" class="main"/>
-      <div id="chartDevSlaves" class="main"/>
+
+      <el-row :gutter="30" style="margin-bottom: 30px;">
+        <el-col :span="12">
+          <el-card>
+            <div id="chartDevOnlineStatus" class="main"/>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card>
+            <div id="chartDevProduct" class="main"/>
+          </el-card>
+        </el-col>
+      </el-row>
+
+        <el-row :gutter="30">
+          <el-col :span="12">
+            <el-card>
+              <div id="chartDevAddress" class="main"/>
+            </el-card>
+          </el-col>
+          <el-col :span="12">
+            <el-card>
+              <div id="chartDevSlaves" class="main"/>
+            </el-card>
+          </el-col>
+        </el-row>
+
+
+
+
     </el-card>
-  </el-card>
 
 
 </template>
@@ -75,7 +99,7 @@ export default {
         })
       }
     })
-    console.log(numAddress)
+
     const optionDevOnline = {
       title: {
         text: '设备在线情况统计',
