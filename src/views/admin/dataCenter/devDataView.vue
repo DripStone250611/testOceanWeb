@@ -50,6 +50,7 @@
     </el-card>
   </el-card>
 
+
 </template>
 
 
@@ -57,8 +58,9 @@
 import {useRoute, useRouter} from "vue-router";
 import {useStore} from "vuex";
 import axios from "axios";
-import {reactive,provide} from "vue";
+import {reactive, provide, onMounted, markRaw, ref,watch} from "vue";
 import BaiduMap from "../../../components/Map/BaiduMap";
+
 import { ArrowRight } from '@element-plus/icons-vue'
 export default {
   name: "devDataView",
@@ -74,8 +76,6 @@ export default {
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(store.state))
     })
-
-
     const devIdx = route.query.devIdx
     const infoDevsDetail = store.state.infoDevsDetail[devIdx]
     const infoVar = store.state.infoVars[devIdx]
@@ -190,4 +190,8 @@ export default {
   width:100px;
 }
 
+.main{
+  height: 400px;
+  width: 100%;
+}
 </style>

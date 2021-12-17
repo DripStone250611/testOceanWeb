@@ -1,4 +1,5 @@
 <template>
+
   <el-card >
     <div style="margin-bottom: 30px;">
       <el-breadcrumb :separator-icon="ArrowRight">
@@ -35,7 +36,6 @@
             :value="item.value"
         />
       </el-select>
-
       <el-date-picker
           v-model="searchTime"
           type="datetimerange"
@@ -45,6 +45,7 @@
       </el-date-picker>
       <el-button @click="getHistoryDataSet()">查询</el-button>
     </div>
+
 
     <el-card >
       <div style="position: relative;">
@@ -124,7 +125,6 @@ export default {
     let myChart = ''
     onMounted(()=>{
       myChart = markRaw(echarts.init(document.getElementById("main"))) ;
-
       window.addEventListener("resize",function(){
         myChart.resize();
       });
@@ -269,6 +269,13 @@ export default {
         series: stOptns.series
       },true)
     }
+    function setCheck(){
+      const length = varOpNow.value.length
+      let i = 0
+      for (i;i<length;i++){
+
+      }
+    }
     return{
       searchTime,
       isDataEmpty,
@@ -284,7 +291,8 @@ export default {
       ArrowRight,
       getVarsFromSlvOp,
       getSlaveFromDevOp,
-      getHistoryDataSet
+      getHistoryDataSet,
+      setCheck
     }
   },
 

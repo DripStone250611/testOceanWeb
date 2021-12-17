@@ -24,7 +24,7 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="getUserInfo">用户信息</el-dropdown-item>
-                  <el-dropdown-item>登出</el-dropdown-item>
+                  <el-dropdown-item @click="logout">登出</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -52,6 +52,10 @@ export default{
   methods:{
     getUserInfo(){
       this.$router.push({name:'userInfoView'})
+    },
+    logout(){
+      this.$store.commit('resetStore' )
+      this.$router.push({name:'login'})
     }
   }
 }
