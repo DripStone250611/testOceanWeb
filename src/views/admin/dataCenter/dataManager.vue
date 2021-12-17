@@ -1,14 +1,29 @@
 <template>
-  <div id="chartDevOnlineStatus" class="main"/>
-  <div id="chartDevProduct" class="main"/>
-  <div id="chartDevAddress" class="main"/>
-  <div id="chartDevSlaves" class="main"/>
+
+  <el-card>
+    <div style="margin-bottom: 30px;">
+      <el-breadcrumb :separator-icon="ArrowRight">
+        <el-breadcrumb-item>数据中心</el-breadcrumb-item>
+        <el-breadcrumb-item>数据统计</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+
+    <el-card>
+      <div id="chartDevOnlineStatus" class="main"/>
+      <div id="chartDevProduct" class="main"/>
+      <div id="chartDevAddress" class="main"/>
+      <div id="chartDevSlaves" class="main"/>
+    </el-card>
+  </el-card>
+
+
 </template>
 
 <script>
 import * as echarts from 'echarts';
 import {markRaw, onMounted} from "vue";
 import {useStore} from "vuex";
+  import { ArrowRight } from '@element-plus/icons-vue'
 export default {
   name: "dataManager",
   setup(){
@@ -213,7 +228,11 @@ export default {
         myChartDevSlaves.resize()
       });
     })
+    return {
+      ArrowRight
+    }
   }
+
 }
 </script>
 

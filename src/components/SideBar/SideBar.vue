@@ -4,7 +4,7 @@
             :default-active="route.name" background-color="#8AAA9F"
             active-text-color="#ffd04b" text-color="#fff"
             router
-            class="el-menu-vertical-demo"
+            class="el-menu-vertical"
             :collapse="isCollapse"
             :default-openeds="state.defaultOpen"
   >
@@ -12,10 +12,11 @@
       <template v-if="item.sub.length!==0">
         <el-sub-menu :index="item.id" :key="item.id">
           <template #title>
+            <el-icon><icon-menu /></el-icon>
             <span v-text="item.name"></span>
           </template>
           <el-menu-item-group v-for="sub in item.sub" :key="sub.componentName">
-            <el-menu-item :index="sub.componentName" v-text="sub.name"></el-menu-item>
+            <el-menu-item :index="sub.componentName" v-text="sub.name" style="padding-left: 60px;"></el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
       </template>
@@ -71,10 +72,23 @@ export default defineComponent({
 </script>
 
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 300px;
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 250px;
   min-height: 400px;
 }
+.el-menu-vertical .el-sub-menu.is-active {
+  background-color: rgb(231, 235, 240) !important;
+}
+.el-submenu__title:hover{
+  background-color:rgb(3, 19, 33) !important;
+}
+.el-menu-vertical .el-sub-menu__title{
+  font-size: 16px;
+}
+.el-menu-vertical .el-menu-item{
+  font-size: 16px;
+}
+
 
 
 </style>

@@ -35,8 +35,7 @@ export default {
 
 <style scoped>
 .aside {
-  width: 200px!important;
-
+  width: 250px;
   overflow: hidden;
   overflow-y: auto;
   -ms-overflow-style: none;
@@ -55,7 +54,7 @@ export default {
 }
 .el-main {
   position: absolute;
-  left: 200px;
+  left: 250px;
   right: 0;
   top: 60px;
   bottom: 0;
