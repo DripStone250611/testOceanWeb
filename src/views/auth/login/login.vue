@@ -56,8 +56,8 @@ export default {
     const logStatus = ref()
     const state = reactive({
       ruleForm: {
-        username: '15192684903',
-        password: 'oceanstellar123'
+        username: '',
+        password: ''
       },
       checked: true,
       rules: {

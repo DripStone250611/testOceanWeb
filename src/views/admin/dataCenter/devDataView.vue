@@ -31,7 +31,6 @@
           ref="multipleTable"
           :data="varInfoShow"
           style="width: 100%"
-          @selection-change="handleSelectionChange"
           v-if="varInfoShow.length>0"
       >
         <el-table-column property="id" label="变量id" width="120" />

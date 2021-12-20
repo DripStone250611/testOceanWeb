@@ -124,11 +124,13 @@ export default {
       getHistoryDataSet()
     }
 
-    let myChart = ''
+    let myChart
     onMounted(()=>{
       myChart = markRaw(echarts.init(document.getElementById("main"))) ;
       window.addEventListener("resize",function(){
-        myChart.resize();
+        if (myChart){
+          myChart.resize();
+        }
       });
     })
 

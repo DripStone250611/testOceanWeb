@@ -246,10 +246,12 @@ export default {
       myChartDevSlaves = markRaw(echarts.init(document.getElementById("chartDevSlaves")))
       myChartDevSlaves.setOption(optionDevSlaves)
       window.addEventListener("resize",function(){
-        myChartDevOnline.resize();
-        myChartDevProduct.resize();
-        myChartDevAddress.resize();
-        myChartDevSlaves.resize()
+        if (myChartDevSlaves){
+          myChartDevOnline.resize();
+          myChartDevProduct.resize();
+          myChartDevAddress.resize();
+          myChartDevSlaves.resize()
+        }
       });
     })
     return {
@@ -263,6 +265,6 @@ export default {
 <style scoped>
 .main{
   height: 400px;
-  width: 100%;
+  width: 500px;
 }
 </style>
