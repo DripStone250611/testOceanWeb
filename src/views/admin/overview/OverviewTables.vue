@@ -7,13 +7,25 @@
         @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column property="onlineStatus" label="设备状态" width="120" />
+      <el-table-column label="设备状态" width="120" >
+        <template #default="scope">
+          <el-tag v-if="infoShow[scope.$index].onlineStatus === 1" type="success">在线</el-tag>
+          <el-tag v-if="infoShow[scope.$index].onlineStatus !== 1" type="info">离线</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column property="name" label="设备名称" width="120" />
       <el-table-column property="deviceId" label="SN" show-overflow-tooltip />
       <el-table-column property="productModelName" label="设备型号" show-overflow-tooltip />
       <el-table-column property="projectName" label="所属组织" show-overflow-tooltip />
       <el-table-column property="address" label="设备地址地址" show-overflow-tooltip />
-      <el-table-column property="status" label="启用状态" />
+      <el-table-column label="启用状态" >
+        <template #default="scope">
+          <el-tag v-if="infoShow[scope.$index].status === 1" type="success">已启用</el-tag>
+          <el-tag v-if="infoShow[scope.$index].status !== 1" type="danger">已禁用</el-tag>
+
+        </template>
+
+      </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
           <el-button size="mini" @click="viewDeviceData(scope.$index)">

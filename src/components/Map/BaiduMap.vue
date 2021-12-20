@@ -24,29 +24,20 @@ export default {
       map.enableScrollWheelZoom();                               //启用滚轮放大缩小
       // 创建地址解析器实例
       const point = new BMap.Point(120.69477, 36.3673842)
-      const myGeo = new BMap.Geocoder();
-      // 将地址解析结果显示在地图上,并调整地图视野
-      myGeo.getPoint(devAddress, function(point) {
-        if (point) {
-          map.centerAndZoom(point, 10);
-          map.addOverlay(new BMap.Marker(point));
-        } else {
-          alert("没有找到地址");
-        }
-      }, "青岛市");
+
 
       function setPlace(value){
         function myFun(){
           var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
           map.centerAndZoom(pp, 10);
-          marker.setPosition(pp);
-          map.addOverlay(marker);    //添加标注
+          map.addOverlay(new BMap.Marker(pp));
         }
         var local = new BMap.LocalSearch(map, { //智能搜索
           onSearchComplete: myFun
         });
         local.search(value);
       }
+      setPlace(devAddress);
 
       map.addEventListener("mousemove",function(e){
         if(e.point.lng >= 0){
