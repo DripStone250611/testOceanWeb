@@ -16,4 +16,4 @@ RUN npm install
 COPY . /app
 
 # 执行启动命令
-CMD ["npm", "start"]
+CMD ["npm", "run", "serve"]
