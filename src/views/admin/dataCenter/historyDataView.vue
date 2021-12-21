@@ -64,7 +64,7 @@
 <script>
 
 import * as echarts from 'echarts'
-import {onMounted, markRaw, ref} from "vue";
+import {onMounted, markRaw, ref, onBeforeUnmount} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import {useStore} from "vuex";
@@ -125,13 +125,17 @@ export default {
     }
 
     let myChart
+    function size(){
+      if (myChart){
+        myChart.resize();
+      }
+    }
     onMounted(()=>{
       myChart = markRaw(echarts.init(document.getElementById("main"))) ;
-      window.addEventListener("resize",function(){
-        if (myChart){
-          myChart.resize();
-        }
-      });
+      window.addEventListener("resize",size);
+    })
+    onBeforeUnmount(()=>{
+      window.removeEventListener("resize",size);
     })
 
 
@@ -171,6 +175,10 @@ export default {
               'Content-Type': 'application/json'
             }
       }).then((responseData)=> {
+
+        if (responseData.data.status !== 0){
+          alert("数据请求失败")
+        }
         historyDataPostRes = responseData.data.data.list
         let i = 0
         setOptions.series = []

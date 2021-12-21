@@ -45,7 +45,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import {markRaw, onMounted} from "vue";
+import {markRaw, onMounted,onBeforeUnmount} from "vue";
 import {useStore} from "vuex";
   import { ArrowRight } from '@element-plus/icons-vue'
 export default {
@@ -236,6 +236,14 @@ export default {
         name : key
       })
     }
+    function size(){
+
+        myChartDevOnline.resize();
+        myChartDevProduct.resize();
+        myChartDevAddress.resize();
+        myChartDevSlaves.resize()
+
+    }
     onMounted(()=>{
       myChartDevOnline = markRaw(echarts.init(document.getElementById("chartDevOnlineStatus"))) ;
       myChartDevOnline.setOption(optionDevOnline);
@@ -245,14 +253,10 @@ export default {
       myChartDevAddress.setOption(optionAddress)
       myChartDevSlaves = markRaw(echarts.init(document.getElementById("chartDevSlaves")))
       myChartDevSlaves.setOption(optionDevSlaves)
-      window.addEventListener("resize",function(){
-        if (myChartDevSlaves){
-          myChartDevOnline.resize();
-          myChartDevProduct.resize();
-          myChartDevAddress.resize();
-          myChartDevSlaves.resize()
-        }
-      });
+      window.addEventListener("resize",size);
+    })
+    onBeforeUnmount(()=>{
+      window.removeEventListener("resize",size);
     })
     return {
       ArrowRight
@@ -265,6 +269,6 @@ export default {
 <style scoped>
 .main{
   height: 400px;
-  width: 500px;
+  width: 100%;
 }
 </style>

@@ -28,6 +28,7 @@ export default {
 
       function setPlace(value){
         function myFun(){
+          map.clearOverlays();
           var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
           map.centerAndZoom(pp, 10);
           map.addOverlay(new BMap.Marker(pp));

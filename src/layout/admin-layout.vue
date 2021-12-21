@@ -8,7 +8,7 @@
         <side-bar/>
       </el-aside>
       <el-main style="background-color: #e4e7ed">
-        <router-view/>
+          <router-view />
       </el-main>
     </el-container>
   </el-container>
@@ -21,12 +21,13 @@ import Overview from "../views/admin/overview/Overview";
 import NavBar from "../components/NavBar/NavBar";
 
 
+
 export default {
   name: "AdminLayout",
   components:{
     SideBar,
     Overview,
-    NavBar
+    NavBar,
   },
   setup(){
   }

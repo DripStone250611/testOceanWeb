@@ -39,7 +39,8 @@ const routes = [
       {
           name:'dataManager',
           path:'dataManager',
-          component:() => import('../views/admin/dataCenter/dataManager')
+          component:() => import('../views/admin/dataCenter/dataManager'),
+          meta:{keepAlive: false}
       },
       {
         name:'devDataView',
@@ -67,7 +68,6 @@ const routes = [
         path:'userInfoView',
         component:()=> import('../views/admin/userManager/userInfoView')
       }
-
 
     ],
   }]
