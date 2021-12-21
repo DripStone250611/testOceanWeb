@@ -245,6 +245,11 @@ export default {
 
     }
     onMounted(()=>{
+      document.getElementById("chartDevOnlineStatus").removeAttribute('_echarts_instance_')
+      document.getElementById("chartDevProduct").removeAttribute('_echarts_instance_')
+      document.getElementById("chartDevAddress").removeAttribute('_echarts_instance_')
+      document.getElementById("chartDevSlaves").removeAttribute('_echarts_instance_')
+
       myChartDevOnline = markRaw(echarts.init(document.getElementById("chartDevOnlineStatus"))) ;
       myChartDevOnline.setOption(optionDevOnline);
       myChartDevProduct = markRaw(echarts.init(document.getElementById("chartDevProduct")))
