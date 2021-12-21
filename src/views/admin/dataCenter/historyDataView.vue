@@ -131,6 +131,7 @@ export default {
       }
     }
     onMounted(()=>{
+      document.getElementById("main").removeAttribute('_echarts_instance_')
       myChart = markRaw(echarts.init(document.getElementById("main"))) ;
       window.addEventListener("resize",size);
     })
