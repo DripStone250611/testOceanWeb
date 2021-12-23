@@ -97,8 +97,33 @@ export default {
                 logErrorMsg.value = "密码错误"
                 logError.value = true
                 break
+              case 1002:
+                logErrorMsg.value = "用户名不能为空"
+                logError.value = true
+                break
+              case 1004:
+                logErrorMsg.value = "密码不能为空"
+                logError.value = true
+                break
+              case 1006:
+                logErrorMsg.value = "账号没有被激活"
+                logError.value = true
+                break
+              case 1007:
+                logErrorMsg.value = "账号没有被锁定"
+                logError.value = true
+                break
+              case 1008:
+                logErrorMsg.value = "账号不存在"
+                logError.value = true
+                break
+              case 5002:
+                logErrorMsg.value = "没有发现参数"
+                logError.value = true
+                break
               default:
-                alert("sss")
+                logErrorMsg.value = "用户名或密码错误"
+                logError.value = true
             }
           });
         } else {

@@ -1,7 +1,7 @@
 <template>
   <el-dialog
       v-model="dialogVisible"
-      title="Tips"
+      title="提示"
       width="30%"
       :before-close="handleClose"
   >

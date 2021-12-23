@@ -57,20 +57,22 @@
 
     </el-card>
   </el-card>
-
+  <Dialog></Dialog>
 
 </template>
 
 <script>
 
 import * as echarts from 'echarts'
-import {onMounted, markRaw, ref, onBeforeUnmount} from "vue";
+import {onMounted, markRaw, ref, onBeforeUnmount, provide} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import {useStore} from "vuex";
 import { ArrowRight } from '@element-plus/icons-vue'
+import Dialog from "../../../components/Dialog";
 export default {
   name: "historyDataView",
+  components: {Dialog},
   setup() {
     const route = useRoute()
     const store = useStore()
@@ -100,6 +102,10 @@ export default {
     const infoVarLst = []
     const devNum = infoDevsDetail.length
 
+    const postError = ref(false)
+    const postErrorMsg = ref('')
+    provide("isShow",postError)
+    provide("msg",postErrorMsg)
 
     searchTime.value.push(new Date())
     searchTime.value.unshift(new Date(new Date().getTime()- 7200 * 1000)) //默认查询两个小时
@@ -176,10 +182,23 @@ export default {
               'Content-Type': 'application/json'
             }
       }).then((responseData)=> {
-
-        if (responseData.data.status !== 0){
-          alert("数据请求失败")
+        if (responseData.data.status === 21){
+          postErrorMsg.value = "请求超时"
+          postError.value = true
+        }else if(responseData.data.status === 1526 || responseData.data.status === 12){
+          postErrorMsg.value = "登录过期，请重新登录"
+          postError.value = true
+        }else if(responseData.data.status === 200){
+          postErrorMsg.value = "服务器错误"
+          postError.value = true
+        }else if(responseData.data.status === 5016){
+          postErrorMsg.value = "参数不完整，请重新选择查询数据"
+          postError.value = true
+        }else if(responseData.data.status !== 0){
+          postErrorMsg.value = "请求失败,失败信息：" + responseData.data.info
+          postError.value = true
         }
+        console.log(responseData.data)
         historyDataPostRes = responseData.data.data.list
         let i = 0
         setOptions.series = []
